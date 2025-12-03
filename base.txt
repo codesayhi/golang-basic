@@ -1,0 +1,21 @@
+go-crud-standard/
+├── cmd/
+│   └── server/
+│       └── main.go           # Điểm khởi chạy duy nhất
+├── configs/
+│   └── .env                  # Biến môi trường
+├── internal/
+│   ├── config/               # Load config
+│   ├── handlers/             # Xử lý HTTP Request/Response
+│   ├── middleware/           # Logger, Auth,...
+│   ├── models/               # Struct dữ liệu
+│   ├── repository/           # Tương tác Database (SQL)
+│   ├── router/               # Định tuyến (Routing)
+│   └── service/              # Logic nghiệp vụ
+├── migrations/
+│   └── 001_init.sql          # File tạo bảng
+├── pkg/
+│   ├── database/             # Kết nối DB
+│   └── utils/                # Hàm tiện ích (Response JSON)
+├── go.mod
+└── go.sum
