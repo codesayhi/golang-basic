@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/codesayhi/golang-basic/internal/config"
+	"github.com/codesayhi/golang-basic/pkg/config"
 	"github.com/codesayhi/golang-basic/pkg/database"
 )
 

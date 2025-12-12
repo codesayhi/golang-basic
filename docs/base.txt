@@ -1,0 +1,61 @@
+my-go-project/
+├── cmd/
+│   └── api/
+│       └── main.go           # Entry point: Chỉ làm nhiệm vụ load config và gọi server.Run()
+├── configs/
+│   ├── config.yaml           # File cấu hình (Port, DB Host, JWT Secret...)
+│   └── .env.example          # Mẫu biến môi trường
+├── docs/                     # Tài liệu API (Swagger/OpenAPI)
+│   ├── swagger.json
+│   └── docs.go
+├── internal/                 # CORE LOGIC (Private)
+│   ├── domain/               # [CORE] Entities & Interfaces (Không import gói nào bên ngoài)
+│   │   ├── errors.go         # Generic Errors
+│   │   ├── user.go           # User Entity + UserRepo Interface
+│   │   ├── product.go        # Product Entity + ProductRepo Interface
+│   │   └── order.go
+│   ├── delivery/             # [TRANSPORT LAYER]
+│   │   └── http/             # REST API
+│   │       ├── middlewares/  # Auth, Logger, CORS, Recovery
+│   │       │   ├── auth_middleware.go
+│   │       │   └── cors_middleware.go
+│   │       ├── v1/           # Versioning
+│   │       │   ├── router.go # Gom tất cả routes con lại
+│   │       │   ├── user/     # Feature User: Handler + DTO
+│   │       │   │   ├── handler.go
+│   │       │   │   └── dto.go
+│   │       │   └── product/  # Feature Product
+│   │       │       ├── handler.go
+│   │       │       └── dto.go
+│   ├── usecase/              # [BUSINESS LOGIC]
+│   │   ├── user/             # Logic User
+│   │   │   └── service.go    # Implement UserUsecase
+│   │   └── product/          # Logic Product
+│   │       └── service.go
+│   ├── repository/           # [DATA ACCESS]
+│   │   ├── mysql/            # Implement MySQL (Gorm/Sqlx)
+│   │   │   ├── user_repo.go
+│   │   │   └── product_repo.go
+│   │   └── redis/            # Implement Caching
+│   │       └── cache_repo.go
+│   └── server/               # [INFRASTRUCTURE WIRING] (Cực quan trọng)
+│       ├── server.go         # Nơi khởi tạo Gin/Echo, gán Middleware
+│       └── handlers.go       # Nơi Map: Handler -> Usecase -> Repo (Dependency Injection)
+├── pkg/                      # [PUBLIC LIBRARY] Code dùng chung, không chứa business logic
+│   ├── config/               # Load config (Viper)
+│   ├── logger/               # Cấu hình Log (Zap/Logrus)
+│   ├── database/             # Hàm connect MySQL/Postgres
+│   ├── utils/                # Hash password, Generate JWT, Validate...
+│   └── response/             # Standard API Response (Success, Error format)
+├── migrations/               # SQL scripts (Flyway/Golang-migrate)
+│   ├── 000001_create_users_table.up.sql
+│   └── 000001_create_users_table.down.sql
+├── scripts/                  # Shell scripts (deploy, seed data)
+├── test/                     # Integration Tests / Mocks
+├── .gitignore
+├── .dockerignore
+├── Dockerfile                # Build Docker image
+├── docker-compose.yml        # Chạy DB, Redis, App cục bộ
+├── Makefile                  # Các lệnh tắt: run, build, test, migrate
+├── go.mod
+└── go.sum
